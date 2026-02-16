@@ -1,56 +1,56 @@
-# CrowdStrike Falcon Deployment via Azure Policy (Windows and Linux)
+# Implantação do CrowdStrike Falcon por meio da Política do Azure (Windows e Linux)
 
-This Bicep template deploys CrowdStrike Falcon agent to Windows and Linux virtual machines across your Azure environment using Azure Policy and a Custom Script Extension. This solution is a community solution not directly supported by Crowdstrike.
+Este modelo do Bicep implanta o agente CrowdStrike Falcon em máquinas virtuais Windows e Linux em todo o seu ambiente do Azure usando o Azure Policy e uma extensão de script personalizada. Esta solução é uma solução da comunidade que não é diretamente suportada pela Crowdstrike.
 
-## Overview
+## Visão Geral
 
-The template creates a custom Azure Policy definition that automatically installs the CrowdStrike Falcon agent on Windows and Linux VMs. It operates at either management group or subscription scope and creates all necessary resources for deployment including policy definitions, assignments, and role assignments.
+O modelo cria uma definição personalizada da Política do Azure que instala automaticamente o agente CrowdStrike Falcon em máquinas virtuais Windows e Linux. Ele opera no âmbito do grupo de gerenciamento ou da assinatura e cria todos os recursos necessários para a implantação, incluindo definições de política, atribuições e atribuições de funções.
 
-## Prerequisites
+## Pre-requisitos
 
-- Azure subscription or management group access with permissions to create policies
-- CrowdStrike Falcon API credentials (Client ID and Client Secret)
-- CrowdStrike Customer ID (CID)
+- Assinatura do Azure ou acesso ao grupo de gerenciamento com permissões para criar políticas
+- Credenciais da API do CrowdStrike Falcon (Client ID e Client Secret)
+- ID do cliente CrowdStrike (CID)
 
-Ensure the following API scopes are enabled:
+Certifique-se de que os seguintes escopos da API estejam habilitados:
 
 - Install:
+  - **Host** [read]
+  - **Installation Tokens** [read]
+  - **Prevention policies** [read]
   - **Sensor Download** [read]
   - **Sensor update policies** [read]
-- Uninstall:
-  - **Host** [write]
-  - **Sensor update policies** [write]
 
-## Parameters
+## Parâmetros
 
-| Parameter | Description | Default |
+| Parametro | Descricao | Default |
 |-----------|-------------|---------|
-| `policyAssignmentName` | Name for the policy assignment | `CS-Deploy-Falcon` |
-| `policyDefinitionName` | Name for the policy definition | `CS-Falcon-Windows` |
-| `FalconCid` | CrowdStrike Customer ID (CID) | (Required) |
-| `installParams` | Falcon agent installation parameters | `/install /quiet /noreboot` |
-| `policyEffect` | Policy enforcement effect | `DeployIfNotExists` |
-| `location` | Azure region for policy resources | (Required) |
-| `FalconClientId` | CrowdStrike API Client ID (secure) | (Required) |
-| `FalconClientSecret` | CrowdStrike API Client Secret (secure) | (Required) |
+| `policyAssignmentName` | Nome para a atribuição da política | `CS-Deploy-Falcon` |
+| `policyDefinitionName` | Nome para a definição da política | `CS-Falcon-Windows` |
+| `FalconCid` | ID do cliente CrowdStrike (CID) | (Obrigatório) |
+| `installParams` | Parâmetros de instalação do agente Falcon | `/install /quiet /noreboot` |
+| `policyEffect` | Efeito da aplicação da política | `DeployIfNotExists` |
+| `location` | Região do Azure para recursos da política | (Obrigatório) |
+| `FalconClientId` | ID do cliente da API CrowdStrike (seguro) | (Obrigatório) |
+| `FalconClientSecret` | Segredo do cliente da API CrowdStrike (seguro) | (Obrigatório) |
 
-## Deployment
+## Implantação
 
-### Windows Policy  - Management Group Scope
+### Política do Windows - Escopo do grupo de gerenciamento
 
 [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fwellingtonvagetti%2Fcs-azure-falcon-policy-cse%2Fmain%2Fcs-windows.json/https%3A%2F%2Fraw.githubusercontent.com%2Fwellingtonvagetti%2Fcs-azure-falcon-policy-cse%2Fmain%2Fui.json)
 
-### Linux Policy - Management Group Scope
+### Política do Linux - Escopo do grupo de gerenciamento
 
-[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fmikedzikowski%2Fcs-azure-falcon-policy-cse%2Fmain%2Fcs-linux.json/https%3A%2F%2Fraw.githubusercontent.com%2Fwellingtonvagetti%2Fcs-azure-falcon-policy-cse%2Fmain%2Fui.json)
+[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fwellingtonvagetti%2Fcs-azure-falcon-policy-cse%2Fmain%2Fcs-linux.json/https%3A%2F%2Fraw.githubusercontent.com%2Fwellingtonvagetti%2Fcs-azure-falcon-policy-cse%2Fmain%2Fui.json)
 
-### Windows Policy  - Subscription Scope
+### Política do Windows  - Escopo da assinatura
 
-[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fmikedzikowski%2Fcs-azure-falcon-policy-cse%2Fmain%2Fcs-windows-subscription.json/https%3A%2F%2Fraw.githubusercontent.com%2Fwellingtonvagetti%2Fcs-azure-falcon-policy-cse%2Fmain%2Fui-subscription.json)
+[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fwellingtonvagetti%2Fcs-azure-falcon-policy-cse%2Fmain%2Fcs-windows-subscription.json/https%3A%2F%2Fraw.githubusercontent.com%2Fwellingtonvagetti%2Fcs-azure-falcon-policy-cse%2Fmain%2Fui-subscription.json)
 
-### Linux Policy - Subscription Scope
+### Política do Linux  - Escopo da assinatura
 
-[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fmikedzikowski%2Fcs-azure-falcon-policy-cse%2Fmain%2Fcs-linux-subscription.json/https%3A%2F%2Fraw.githubusercontent.com%2Fwellingtonvagetti%2Fcs-azure-falcon-policy-cse%2Fmain%2Fui-subscription.json)
+[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fwellingtonvagetti%2Fcs-azure-falcon-policy-cse%2Fmain%2Fcs-linux-subscription.json/https%3A%2F%2Fraw.githubusercontent.com%2Fwellingtonvagetti%2Fcs-azure-falcon-policy-cse%2Fmain%2Fui-subscription.json)
 
 ### Azure CLI
 
@@ -58,12 +58,23 @@ Ensure the following API scopes are enabled:
 # Login to Azure
 az login
 
-# Deploy at management group scope
+# Implantar no escopo do grupo de gerenciamento
 az deployment mg create \
   --name falcon-policy-deployment \
   --location eastus \
   --management-group-id YOUR_MGMT_GROUP_ID \
   --template-file cse-windows.bicep \
+  --parameters FalconCid=YOUR_CID \
+  --parameters FalconClientId=YOUR_CLIENT_ID \
+  --parameters FalconClientSecret=YOUR_CLIENT_SECRET \
+  --parameters location=eastus
+
+# Implantar no escopo da assinatura
+az deployment sub create \
+  --name falcon-policy-deployment \
+  --location eastus \
+  --management-group-id YOUR_SUBSCRIPTION_ID \
+  --template-file cse-windows-subscription.bicep \
   --parameters FalconCid=YOUR_CID \
   --parameters FalconClientId=YOUR_CLIENT_ID \
   --parameters FalconClientSecret=YOUR_CLIENT_SECRET \
@@ -96,26 +107,26 @@ New-AzManagementGroupDeployment -Name falcon-policy-deployment `
   -location eastus
 ```
 
-## How It Works
+## Como funciona
 
-1. The template creates a custom policy definition that identifies Windows VMs without the Falcon agent installed
-2. It then deploys a custom script extension that downloads and installs the Falcon agent using credentials provided
-3. A managed identity is created and granted the "Virtual Machine Contributor" role to allow extension deployment
-4. The policy is assigned to your subscription or management group
+1. O modelo cria uma definição de política personalizada que identifica VMs Windows sem o agente Falcon instalado.
+2. Em seguida, ele implanta uma extensão de script personalizada que baixa e instala o agente Falcon usando as credenciais fornecidas.
+3. Uma identidade gerenciada é criada e recebe a função “Colaborador de máquina virtual” para permitir a implantação da extensão.
+4. A política é atribuída à sua assinatura ou grupo de gerenciamento.
 
-## Policy Effects
+## Efeitos da política
 
-- **DeployIfNotExists**: Automatically installs the agent on non-compliant VMs (default)
-- **AuditIfNotExists**: Reports non-compliant VMs but doesn't install the agent
-- **Disabled**: Policy is inactive
+- **DeployIfNotExists**: Instala automaticamente o agente em VMs não compatíveis (padrão)
+- **AuditIfNotExists**: Relata VMs não compatíveis, mas não instala o agente
+- **Disabled**: A política está inativa
 
-## Result in Azure
+## Resultado no Azure
 
 ![alt text](image.png)
 
 ![alt text](image-2.png)
 
-## Verify Service is Running
+## Verifique se o serviço está em execução (Running)
 
 ```powershell
 
@@ -132,20 +143,20 @@ if ($csService -and $csService.Status -eq 'Running') {
 
 ## Troubleshooting
 
-If deployment fails, check:
+Se a implantação falhar, verifique:
 
-- Verify your CrowdStrike API credentials are valid
-- Ensure the managed identity has appropriate permissions
-- Check VM extension deployment logs for installation errors
+- Verifique se suas credenciais da API CrowdStrike são válidas
+- Certifique-se de que a identidade gerenciada tenha as permissões adequadas
+- Verifique os logs de implantação da extensão da VM para erros de instalação
 
-## Notes
+## Observações
 
-- The template uses the official CrowdStrike installation script from GitHub
-- Newly created VMs will automatically receive the agent during provisioning
-- Credentials are passed securely to the deployment
+- O modelo usa o script de instalação oficial do CrowdStrike do GitHub
+- As VMs recém-criadas receberão automaticamente o agente durante o provisionamento
+- As credenciais são passadas com segurança para a implantação
 
 ## References
 
-- [CrowdStrike Falcon Documentation](https://falcon.crowdstrike.com/documentation/)
-- [Azure Policy Documentation](https://docs.microsoft.com/en-us/azure/governance/policy/)
-- [Bicep Documentation](https://docs.microsoft.com/en-us/azure/azure-resource-manager/bicep/)
+- [Documentação do CrowdStrike Falcon](https://falcon.crowdstrike.com/documentation/)
+- [Documentação da Política do Azure](https://docs.microsoft.com/en-us/azure/governance/policy/)
+- [Documentação do Bicep](https://docs.microsoft.com/en-us/azure/azure-resource-manager/bicep/)
