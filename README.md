@@ -6,7 +6,7 @@ Este modelo do Bicep implanta o agente CrowdStrike Falcon em máquinas virtuais 
 
 O modelo cria uma definição personalizada da Política do Azure que instala automaticamente o agente CrowdStrike Falcon em máquinas virtuais Windows e Linux. Ele opera no âmbito do grupo de gerenciamento ou da assinatura e cria todos os recursos necessários para a implantação, incluindo definições de política, atribuições e atribuições de funções.
 
-## Pre-requisitos
+## Pré-requisitos
 
 - Assinatura do Azure ou acesso ao grupo de gerenciamento com permissões para criar políticas
 - Credenciais da API do CrowdStrike Falcon (Client ID e Client Secret)
@@ -23,7 +23,7 @@ Certifique-se de que os seguintes escopos da API estejam habilitados:
 
 ## Parâmetros
 
-| Parametro | Descricao | Default |
+| Parâmetro | Descrição | Default |
 |-----------|-------------|---------|
 | `policyAssignmentName` | Nome para a atribuição da política | `CS-Deploy-Falcon` |
 | `policyDefinitionName` | Nome para a definição da política | `CS-Falcon-Windows` |
@@ -63,7 +63,7 @@ az deployment mg create \
   --name falcon-policy-deployment \
   --location eastus \
   --management-group-id YOUR_MGMT_GROUP_ID \
-  --template-file cse-windows.bicep \
+  --template-file cs-windows.bicep \
   --parameters FalconCid=YOUR_CID \
   --parameters FalconClientId=YOUR_CLIENT_ID \
   --parameters FalconClientSecret=YOUR_CLIENT_SECRET \
@@ -74,7 +74,7 @@ az deployment sub create \
   --name falcon-policy-deployment \
   --location eastus \
   --management-group-id YOUR_SUBSCRIPTION_ID \
-  --template-file cse-windows-subscription.bicep \
+  --template-file cs-windows-subscription.bicep \
   --parameters FalconCid=YOUR_CID \
   --parameters FalconClientId=YOUR_CLIENT_ID \
   --parameters FalconClientSecret=YOUR_CLIENT_SECRET \
@@ -90,7 +90,7 @@ Connect-AzAccount
 # Deploy at subscription scope
 New-AzDeployment -Name falcon-policy-deployment `
   -Location eastus `
-  -TemplateFile .\cse-windows.bicep `
+  -TemplateFile .\cs-windows.bicep `
   -FalconCid YOUR_CID `
   -FalconClientId YOUR_CLIENT_ID `
   -FalconClientSecret YOUR_CLIENT_SECRET `
@@ -100,7 +100,7 @@ New-AzDeployment -Name falcon-policy-deployment `
 New-AzManagementGroupDeployment -Name falcon-policy-deployment `
   -Location eastus `
   -ManagementGroupId YOUR_MGMT_GROUP_ID `
-  -TemplateFile .\cse-windows.bicep `
+  -TemplateFile .\cs-windows.bicep `
   -FalconCid YOUR_CID `
   -FalconClientId YOUR_CLIENT_ID `
   -FalconClientSecret YOUR_CLIENT_SECRET `
