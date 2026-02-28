@@ -55,7 +55,7 @@ Certifique-se de que os seguintes escopos da API estejam habilitados:
 ### Azure CLI
 
 ```powershell
-# Login to Azure
+# Login na Azure
 az login
 
 # Implantar no escopo do Grupo de Gerenciamento
