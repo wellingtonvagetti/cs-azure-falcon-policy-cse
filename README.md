@@ -58,7 +58,7 @@ Certifique-se de que os seguintes escopos da API estejam habilitados:
 # Login to Azure
 az login
 
-# Implantar no escopo do grupo de gerenciamento
+# Implantar no escopo do Grupo de Gerenciamento
 az deployment mg create \
   --name falcon-policy-deployment \
   --location eastus \
@@ -69,7 +69,7 @@ az deployment mg create \
   --parameters FalconClientSecret=YOUR_CLIENT_SECRET \
   --parameters location=eastus
 
-# Implantar no escopo da assinatura
+# Implantar no escopo da Assinatura
 az deployment sub create \
   --name falcon-policy-deployment \
   --subscription YOUR_SUBSCRIPTION_ID \
@@ -87,7 +87,7 @@ az deployment sub create \
 # Login to Azure
 Connect-AzAccount
 
-# Deploy at subscription scope
+# Implantar no escopo da Assinatura
 New-AzDeployment -Name falcon-policy-deployment `
   -Location eastus `
   -TemplateFile .\cs-windows.bicep `
@@ -96,7 +96,7 @@ New-AzDeployment -Name falcon-policy-deployment `
   -FalconClientSecret YOUR_CLIENT_SECRET `
   -location eastus
 
-# Deploy at management group scope
+# Implantar no escopo do Grupo de Gerenciamento
 New-AzManagementGroupDeployment -Name falcon-policy-deployment `
   -Location eastus `
   -ManagementGroupId YOUR_MGMT_GROUP_ID `
@@ -130,7 +130,7 @@ New-AzManagementGroupDeployment -Name falcon-policy-deployment `
 
 ```powershell
 
-# Check if CrowdStrike service is running
+# Verifique se o serviço CrowdStrike está em execução
 $csService = Get-Service -Name "CSFalconService" -ErrorAction SilentlyContinue
 if ($csService -and $csService.Status -eq 'Running') {
     Write-Host "CrowdStrike Falcon service is running" -ForegroundColor Green
