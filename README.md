@@ -72,8 +72,8 @@ az deployment mg create \
 # Implantar no escopo da assinatura
 az deployment sub create \
   --name falcon-policy-deployment \
+  --subscription YOUR_SUBSCRIPTION_ID \
   --location eastus \
-  --management-group-id YOUR_SUBSCRIPTION_ID \
   --template-file cs-windows-subscription.bicep \
   --parameters FalconCid=YOUR_CID \
   --parameters FalconClientId=YOUR_CLIENT_ID \
